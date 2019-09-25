@@ -1,0 +1,66 @@
+/*
+Template Name: Material Pro Admin
+Author: Themedesigner
+Email: niravjoshi87@gmail.com
+File: scss
+*/
+
+$mat-ucam: (
+        50 : #f2e1e6,
+        100 : #deb3c0,
+        200 : #c88197,
+        300 : #b14f6d,
+        400 : #a1294d,
+        500 : #90032e,
+        600 : #880329,
+        700 : #7d0223,
+        800 : #73021d,
+        900 : #610112,
+        A100 : #ff919c,
+        A200 : #ff5e6e,
+        A400 : #ff2b40,
+        A700 : #ff1229,
+        contrast: (
+                50 : #000000,
+                100 : #000000,
+                200 : #000000,
+                300 : #ffffff,
+                400 : #ffffff,
+                500 : #ffffff,
+                600 : #ffffff,
+                700 : #ffffff,
+                800 : #ffffff,
+                900 : #ffffff,
+                A100 : #000000,
+                A200 : #000000,
+                A400 : #ffffff,
+                A700 : #ffffff,
+        )
+);
+
+$ucam-app-primary: mat-palette($mat-ucam);
+$ucam-app-accent: mat-palette($mat-indigo, A200, A100, A400);
+$ucam-app-warn: mat-palette($mat-pink);
+
+// Create the theme object (a Sass map containing all of the palettes).
+$ucam-app-theme: mat-light-theme($ucam-app-primary, $ucam-app-accent, $ucam-app-warn);
+$themecolor: #90032e;
+$themecolor-alt: #73021d;
+$white: #fff;
+
+#snav {
+  .mat-list-item {
+    .mat-list-item-content {
+      &:hover {
+        > a {
+          color: $themecolor;
+        }
+      }
+    }
+
+    &.selected > .mat-list-item-content > a {
+      background: $themecolor-alt;
+      color: $white;
+    }
+  }
+}

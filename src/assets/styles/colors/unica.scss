@@ -1,0 +1,66 @@
+/*
+Template Name: Material Pro Admin
+Author: Themedesigner
+Email: niravjoshi87@gmail.com
+File: scss
+*/
+
+$mat-unica: (
+        50 : #e6f5e7,
+        100 : #c1e5c3,
+        200 : #98d49b,
+        300 : #6ec272,
+        400 : #4fb554,
+        500 : #30a836,
+        600 : #2ba030,
+        700 : #249729,
+        800 : #1e8d22,
+        900 : #137d16,
+        A100 : #b2ffb3,
+        A200 : #7fff81,
+        A400 : #4cff4f,
+        A700 : #32ff36,
+        contrast: (
+                50 : #000000,
+                100 : #000000,
+                200 : #000000,
+                300 : #000000,
+                400 : #000000,
+                500 : #ffffff,
+                600 : #ffffff,
+                700 : #ffffff,
+                800 : #ffffff,
+                900 : #ffffff,
+                A100 : #000000,
+                A200 : #000000,
+                A400 : #000000,
+                A700 : #000000,
+        )
+);
+
+$unica-app-primary: mat-palette($mat-unica);
+$unica-app-accent: mat-palette($mat-indigo, A200, A100, A400);
+$unica-app-warn: mat-palette($mat-pink);
+
+// Create the theme object (a Sass map containing all of the palettes).
+$unica-app-theme: mat-light-theme($unica-app-primary, $unica-app-accent, $unica-app-warn);
+$themecolor: #30a836;
+$themecolor-alt: #146418;
+$white: #fff;
+
+#snav {
+  .mat-list-item {
+    .mat-list-item-content {
+      &:hover {
+        > a {
+          color: $themecolor;
+        }
+      }
+    }
+
+    &.selected > .mat-list-item-content > a {
+      background: $themecolor-alt;
+      color: $white;
+    }
+  }
+}

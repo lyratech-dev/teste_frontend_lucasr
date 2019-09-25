@@ -1,0 +1,66 @@
+/*
+Template Name: Material Pro Admin
+Author: Themedesigner
+Email: niravjoshi87@gmail.com
+File: scss
+*/
+
+$mat-prominas: (
+        50 : #e3e5e8,
+        100 : #b8bec5,
+        200 : #89939e,
+        300 : #596777,
+        400 : #364759,
+        500 : #12263c,
+        600 : #102236,
+        700 : #0d1c2e,
+        800 : #0a1727,
+        900 : #050d1a,
+        A100 : #598bff,
+        A200 : #2667ff,
+        A400 : #0048f2,
+        A700 : #0041d9,
+        contrast: (
+                50 : #000000,
+                100 : #000000,
+                200 : #000000,
+                300 : #ffffff,
+                400 : #ffffff,
+                500 : #ffffff,
+                600 : #ffffff,
+                700 : #ffffff,
+                800 : #ffffff,
+                900 : #ffffff,
+                A100 : #000000,
+                A200 : #ffffff,
+                A400 : #ffffff,
+                A700 : #ffffff,
+        )
+);
+
+$prominas-app-primary: mat-palette($mat-prominas);
+$prominas-app-accent: mat-palette($mat-indigo, A200, A100, A400);
+$prominas-app-warn: mat-palette($mat-pink);
+
+// Create the theme object (a Sass map containing all of the palettes).
+$prominas-app-theme: mat-light-theme($prominas-app-primary, $prominas-app-accent, $prominas-app-warn);
+$themecolor: #12263c;
+$themecolor-alt: #0d1c2e;
+$white: #fff;
+
+#snav {
+  .mat-list-item {
+    .mat-list-item-content {
+      &:hover {
+        > a {
+          color: $themecolor;
+        }
+      }
+    }
+
+    &.selected > .mat-list-item-content > a {
+      background: $themecolor-alt;
+      color: $white;
+    }
+  }
+}
