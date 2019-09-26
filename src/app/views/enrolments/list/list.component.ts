@@ -23,8 +23,8 @@ export class ListComponent implements OnInit {
                 path: 'courses'
             })
             .get()
-            .then(
-                courses => this.courses = courses.data);
+            .then(courses => this.courses = courses.data)
+            .catch(err => console.log('erro: ', err));
     }
 
     ngOnInit(): void {
