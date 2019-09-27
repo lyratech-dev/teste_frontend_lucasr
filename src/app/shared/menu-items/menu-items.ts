@@ -41,10 +41,20 @@ const MENUITEMS = [
     },
     {
         state: 'inscricoes',
-        name : 'Meus cursos',
+        name: 'Cursos',
+        type: 'sub',
+        icon: 'link',
+        children: [
+          { state: 'meus-cursos', name: 'Meus Cursos', type: 'link' },
+          { state: 'nova', name: 'Nova Inscrição', type: 'link' }
+        ]
+    },
+    {
+        state: 'teste',
+        name : 'Teste',
         type : 'link',
-        icon : 'code'
-    }
+        icon : 'dashboard'
+    },
 ];
 
 @Injectable()

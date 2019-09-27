@@ -1,5 +1,12 @@
 <pre *ngIf="false">{{enrollments | json}}</pre>
 
+<a 
+  mat-stroked-button 
+  color="accent"
+  routerLink="/inscricoes/nova">
+  Realizar Nova Matrícula
+</a>
+
 <mat-card>
   <mat-card-header class="bg-info text-white">
     <mat-card-title>Meus Cursos</mat-card-title>
@@ -12,7 +19,7 @@
         <mat-card-header 
           [ngClass]="{ 'bg-info': e.status === 'ENROLLED', 'bg-warning': e.status === 'CANCELED', 'bg-inverse': e.status === 'PENDING_PAYMENT' }"
           class="text-white">
-          <mat-card-subtitle>{{ e.course.type }}</mat-card-subtitle>
+          <mat-card-subtitle>{{ getType(e.course.type) }}</mat-card-subtitle>
           <mat-card-title>{{ e.course.name }}</mat-card-title>
         </mat-card-header>
 

@@ -1,0 +1,274 @@
+<pre *ngIf="false">{{enrollments | json}}</pre>
+
+<div fxLayout="row wrap">
+  <div fxFlex.gt-sm="100" fxFlex="100">
+
+    <mat-card>
+      <mat-card-header class="bg-info text-white">
+        <mat-card-title>Realizar Nova Matrícula</mat-card-title>
+        <button mat-stroked-button color="accent" class="text-white ml-auto">Precisa de Ajuda?</button>
+      </mat-card-header>
+
+      <mat-card-content>
+        <mat-horizontal-stepper [linear]="true">
+
+          <!-- STEP 01 -->
+          <mat-step [stepControl]="chooseCourse">
+            <form class="basic-form" [formGroup]="chooseCourse">
+              <ng-template matStepLabel>Escolha Seu Curso</ng-template>
+
+              <div fxLayout="row wrap" fxFlexAlign="center" class="row">
+                <div fxFlex.gt-sm="50" fxFlex="100" class="p-10">
+                  <mat-form-field>
+                    <mat-select placeholder="Tipo" formControlName="type" (selectionChange)="onTypeOrAreaChange($event)">
+                      <mat-option value="POS">
+                        Pós-Graduação
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+
+                <div fxFlex.gt-sm="50" fxFlex="100" class="p-10">
+                  <mat-form-field>
+                    <mat-select placeholder="Área" formControlName="area" (selectionChange)="onTypeOrAreaChange($event)">
+                      <mat-option value="Engenharias">
+                        Engenharias
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+
+                <div fxFlex.gt-sm="100" fxFlex="100" class="p-10">
+                  <mat-form-field>
+                    <mat-select placeholder="Curso" formControlName="course" (selectionChange)="onCourseChange($event)">
+                      <mat-option *ngFor="let c of courses" [value]="c._id">
+                        {{ c.name }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </div>
+
+              <div>
+                <button mat-raised-button color="primary" matStepperNext>Próximo</button>
+              </div>
+            </form>
+          </mat-step>
+          <!-- STEP 01 -->
+
+          <!-- STEP 02 -->
+          <mat-step>
+            <ng-template matStepLabel>Personalize Seu Curso</ng-template>
+            <pre *ngIf="false">{{ course | json }}</pre>
+
+            <mat-card *ngIf="course.disciplines">
+              <mat-card-content>
+                <mat-card-title>{{ course.name | uppercase }}</mat-card-title>
+                <mat-card-subtitle>{{ getCourseType(course.type) }} - {{ course.area }}</mat-card-subtitle>
+    
+                <p>{{ course.description }}</p>
+    
+                <mat-card-actions>
+                  <mat-chip-list>
+                    <mat-chip color="accent" selected="true">
+                      TCC: {{ course.optionalTcc ? 'Opcional' : 'Obrigatório' }}
+                    </mat-chip>
+                    <mat-chip color="accent" selected="true">
+                      Carga Horária: {{ calcCourseWorkload(course) }}h
+                    </mat-chip>
+                  </mat-chip-list>
+                </mat-card-actions>
+              </mat-card-content>
+            </mat-card>
+
+            <mat-card *ngIf="course.disciplines">
+              <mat-card-header>
+                <mat-card-title>Escolha Suas Disciplinas</mat-card-title>
+              </mat-card-header>
+              
+              <mat-card-content>
+                <mat-chip-list>
+                  <mat-chip color="accent" selected="true" *ngFor="let d of course.disciplines">
+                    {{ d.name }} - {{ d.workload }}h
+                  </mat-chip>
+                </mat-chip-list>
+              </mat-card-content>
+            </mat-card>
+
+            <div>
+              <button type="button" mat-raised-button color="accent" matStepperPrevious>Voltar</button>
+              <button mat-raised-button color="primary" matStepperNext>Próximo</button>
+            </div>
+          </mat-step>
+          <!-- STEP 02 -->
+
+          <!-- STEP 03 -->
+          <mat-step [stepControl]="personalData">
+            <form class="basic-form" [formGroup]="personalData">
+              <ng-template matStepLabel>Dados Pessoais</ng-template>
+
+              <div fxLayout="row wrap" fxFlexAlign="center" class="row">
+
+                <div fxFlex.gt-sm="100" fxFlex="100" class="p-10">
+                  <mat-form-field>
+                    <input matInput placeholder="CPF" formControlName="cpf">
+                  </mat-form-field>
+                </div>
+              </div>
+
+              <h5>Seus Dados</h5>
+              <div fxLayout="row wrap" fxFlexAlign="center" class="row">
+
+                <div fxFlex.gt-sm="50" fxFlex="100" class="p-10">
+                  <mat-form-field>
+                    <input matInput placeholder="Seu Nome" formControlName="name">
+                  </mat-form-field>
+                </div>
+
+                <div fxFlex.gt-sm="50" fxFlex="100" class="p-10">
+                  <mat-form-field>
+                    <input matInput placeholder="Seu Email" formControlName="email">
+                  </mat-form-field>
+                </div>
+
+                <div fxFlex.gt-sm="50" fxFlex="100" class="p-10">
+                  <mat-form-field>
+                    <input matInput placeholder="Celular" formControlName="cellphone">
+                  </mat-form-field>
+                </div>
+
+                <div fxFlex.gt-sm="50" fxFlex="100" class="p-10">
+                  <mat-form-field (click)="picker.open()">
+                    <input 
+                      matInput 
+                      [matDatepicker]="picker" 
+                      placeholder="Data de Colação de Grau" 
+                      formControlName="graduationDate"
+                      [min]="minDateForm"
+                      [max]="limitDateForm"
+                      readonly>
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                  </mat-form-field>
+                </div>
+              </div>
+
+              <h5>Endereço</h5>
+              <div fxLayout="row wrap" fxFlexAlign="center" class="row" formGroupName="address">
+                <div fxFlex.gt-sm="50" fxFlex="100" class="p-10">
+                  <mat-form-field>
+                    <input matInput placeholder="CEP" formControlName="zip">
+                  </mat-form-field>
+                </div>
+
+                <div fxFlex.gt-sm="50" fxFlex="100" class="p-10">
+                  <mat-form-field>
+                    <input matInput placeholder="Estado" formControlName="state">
+                  </mat-form-field>
+                </div>
+
+                <div fxFlex.gt-sm="50" fxFlex="100" class="p-10">
+                  <mat-form-field>
+                    <input matInput placeholder="Cidade" formControlName="city">
+                  </mat-form-field>
+                </div>
+
+                <div fxFlex.gt-sm="50" fxFlex="100" class="p-10">
+                  <mat-form-field>
+                    <input matInput placeholder="Bairro" formControlName="neighborhood">
+                  </mat-form-field>
+                </div>
+
+                <div fxFlex.gt-sm="50" fxFlex="100" class="p-10">
+                  <mat-form-field>
+                    <input matInput placeholder="Rua" formControlName="street">
+                  </mat-form-field>
+                </div>
+
+                <div fxFlex.gt-sm="50" fxFlex="100" class="p-10">
+                  <mat-form-field>
+                    <input matInput placeholder="Número" formControlName="number">
+                  </mat-form-field>
+                </div>
+
+                <div fxFlex.gt-sm="100" fxFlex="100" class="p-10">
+                  <mat-form-field>
+                    <input matInput placeholder="Complemento" formControlName="complement">
+                  </mat-form-field>
+                </div>
+              </div>
+
+              <div>
+                <button type="button" mat-raised-button color="accent" matStepperPrevious>Voltar</button>
+                <button type="button" mat-raised-button color="accent" matStepperNext (click)="extractStudent()">Próximo</button>
+              </div>
+            </form>
+          </mat-step>
+          <!-- STEP 03 -->
+
+          <!-- STEP 04 -->
+          <mat-step>
+            <ng-template matStepLabel>Concluir</ng-template>
+            
+            <div fxLayout="row wrap">
+              <div fxFlex.gt-sm="50%" fxFlex="100">
+                <mat-card>
+                  <mat-card-content>
+                    <mat-card-title>
+                      <h4 class="m-0">Dados Pessoais</h4>
+                    </mat-card-title>
+                    <ul class="list-unstyled">
+                      <li>
+                        <strong>Nome:</strong> {{ student.name }}
+                      </li>
+                      <li>
+                        <strong>CPF:</strong> {{ student.cpf }}
+                      </li>
+                      <li>
+                        <strong>Email:</strong> {{ student.email }}
+                      </li>
+                      <li>
+                        <strong>Celular:</strong> {{ student.cellphone }}
+                      </li>
+                      <li>
+                        <strong>Colação de Grau:</strong> {{ student.graduationDate | date: 'dd/MM/yyyy' }}
+                      </li>
+                    </ul>
+                  </mat-card-content>
+                </mat-card>
+              </div>
+
+              <div fxFlex.gt-sm="50%" fxFlex="100" *ngIf="course.disciplines">
+                <mat-card>
+                  <mat-card-content>
+                    <mat-card-title>
+                      <h4 class="m-0">Dados do Curso</h4>
+                    </mat-card-title>
+                    <ul class="list-unstyled">
+                      <li><strong>Curso:</strong> {{ course.name }}</li>
+                      <li><strong>Tipo:</strong> {{ getCourseType(course.type) }}</li>
+                      <li><strong>Área:</strong> {{ course.area }}</li>
+                      <li><strong>Carga Horária:</strong> {{ calcCourseWorkload(course) }}h</li>
+                    </ul>
+                  </mat-card-content>
+                </mat-card>
+              </div>
+            </div>
+
+            <div>
+              <button type="button" mat-raised-button color="accent" matStepperPrevious>Back</button>
+              <button
+                type="button" 
+                mat-raised-button 
+                color="accent" 
+                (click)="finish()"
+                [disabled]="isSending">{{ isSending ? 'Enviando' : 'Concluir'}}</button>
+            </div>
+          </mat-step>
+          <!-- STEP 04 -->
+        </mat-horizontal-stepper>
+
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

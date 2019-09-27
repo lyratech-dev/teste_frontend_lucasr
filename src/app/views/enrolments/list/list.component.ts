@@ -46,4 +46,8 @@ export class ListComponent implements OnInit {
         if (status === 'CANCELED')  return "warn";
         if (status === 'ENROLLED')  return "primary";
     }
+
+    getType(type) {
+        if (type === 'POS') return "Pós-Graduação";
+    }
 }

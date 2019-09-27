@@ -9,6 +9,8 @@ import { ChartistModule } from 'ng-chartist';
 import { ChartsModule } from 'ng2-charts';
 
 import { ListComponent } from './list/list.component';
+import { CreateComponent } from './create/create.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
     imports     : [
@@ -17,8 +19,10 @@ import { ListComponent } from './list/list.component';
         FlexLayoutModule,
         ChartistModule,
         ChartsModule,
-        RouterModule.forChild(EnrolmentsRoutes)
+        RouterModule.forChild(EnrolmentsRoutes),
+        FormsModule,
+        ReactiveFormsModule
     ],
-    declarations: [ ListComponent ]
+    declarations: [ ListComponent, CreateComponent ]
 })
 export class EnrolmentsModule {}
