@@ -12,22 +12,38 @@ import { ApiService } from '../../../services/core/api.service';
 
 export class ListComponent implements OnInit {
 
-    courses = [];
+    enrollments = [];
 
     constructor(private apiService: ApiService) {}
 
-    exemploRequisicao() {
+    getEnrollmentsByCpf(cpf) {
         this.apiService
             .getBuilder({
                 api : 'portal',
-                path: 'courses'
+                path: `enrollments/cpf/${cpf}`
             })
             .get()
-            .then(courses => this.courses = courses.data)
+            .then(enrollments => this.enrollments = enrollments.data)
             .catch(err => console.log('erro: ', err));
     }
 
     ngOnInit(): void {
-        this.exemploRequisicao();
+        this.getEnrollmentsByCpf("123.456.789-10");
+    }
+
+    calcWorkload(course) {
+        return course.disciplines.reduce((total, d) => total += +d.workload, 0);
+    }
+
+    getStatusMessage(status) {
+        if (status === 'PENDING_PAYMENT')  return "Aguardando Pagamento da Taxa de Inscrição";
+        if (status === 'CANCELED')  return "Cancelado";
+        if (status === 'ENROLLED')  return "Matrículado";
+    }
+
+    getStatusColor(status) {
+        if (status === 'PENDING_PAYMENT')  return "accent";
+        if (status === 'CANCELED')  return "warn";
+        if (status === 'ENROLLED')  return "primary";
     }
 }

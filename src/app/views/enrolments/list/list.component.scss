@@ -1,0 +1,30 @@
+.course-card {
+  border: 1px solid #2f3d4a4d;
+}
+
+.course-card mat-card-header {
+  border-top-left-radius: 0px;
+  border-top-right-radius: 0px;
+}
+
+.course-card mat-card-content {
+  padding-top: 1em !important;
+  margin-bottom: 0px;
+}
+
+.course-card mat-card-content p {
+  margin-top: 0px !important;
+  margin-bottom: 0.5em !important;
+}
+
+.course-card mat-card-footer {
+  height: 3em;
+  margin: 0 0 0 0;
+  padding: 0.9em;
+  background-color: #1e88e5;
+  font-weight: bold;
+}
+
+.ml-auto {
+  margin-left: auto;
+}

@@ -1,4 +1,46 @@
-Seu componente...
-<br/>
-Curos:
-<pre>{{courses | json}}</pre>
+<pre *ngIf="false">{{enrollments | json}}</pre>
+
+<mat-card>
+  <mat-card-header class="bg-info text-white">
+    <mat-card-title>Meus Cursos</mat-card-title>
+    <button mat-stroked-button color="accent" class="text-white ml-auto">Precisa de Ajuda?</button>
+  </mat-card-header>
+  <mat-card-content fxLayout="row wrap" fxLayoutAlign="space-evenly stretch">
+    
+    <div fxFlex.gt-sm="33.33%" fxFlex="100" *ngFor="let e of enrollments">
+      <mat-card class="course-card">
+        <mat-card-header 
+          [ngClass]="{ 'bg-info': e.status === 'ENROLLED', 'bg-warning': e.status === 'CANCELED', 'bg-inverse': e.status === 'PENDING_PAYMENT' }"
+          class="text-white">
+          <mat-card-subtitle>{{ e.course.type }}</mat-card-subtitle>
+          <mat-card-title>{{ e.course.name }}</mat-card-title>
+        </mat-card-header>
+
+        <mat-card-content class="text-center">
+          <p>Carga Horária: {{ calcWorkload(e.course) }} horas</p>
+          <p>Área: {{ e.course.area }}</p>
+          <p>
+            <a 
+              mat-stroked-button 
+              color="accent"
+              href="{{ e.contract }}"
+              target="_blank">
+                <mat-icon>picture_as_pdf</mat-icon> Contrato
+            </a>
+          </p>
+          <mat-chip-list fxLayoutAlign="center center">
+            <mat-chip [color]="getStatusColor(e.status)" selected>
+              <small>{{ getStatusMessage(e.status) }}</small>
+            </mat-chip>
+          </mat-chip-list>
+        </mat-card-content>
+
+        <mat-card-footer class="text-center" *ngIf="e.status === 'ENROLLED'">
+          <a href="#" class="text-white">Acessar AVA</a>
+        </mat-card-footer>
+
+      </mat-card>
+    </div>
+
+  </mat-card-content>
+</mat-card>

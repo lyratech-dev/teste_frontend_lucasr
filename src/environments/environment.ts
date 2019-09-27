@@ -10,7 +10,7 @@ export const environment = {
         apis      : {
             portal: {
                 mode   : 'direct',
-                baseUrl: 'http://localhost:3087/'
+                baseUrl: 'http://localhost:3000/'
             }
         }
     }
